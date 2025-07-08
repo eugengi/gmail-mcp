@@ -1,3 +1,14 @@
+# Guide (user-friendly):
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+
+# Specification (technical, formal):
+# https://packaging.python.org/en/latest/specifications/pyproject-toml/
+
+# TOML Specification (technical, formal):
+# https://toml.io/en/latest
+
+# =======================================================================================
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
@@ -9,18 +20,19 @@ description = 'An MCP server to interface with Gmail via the MCP protocol.'
 readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
-keywords = []
+keywords = ["gmail", "gmail-api", "google", "mcp", "mcp-server",]
 authors = [
   { name = "Eugene Mwangi", email = "mwangi.em37@gmail.com" },
 ]
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 3 - Alpha",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
@@ -31,6 +43,10 @@ Documentation = "https://github.com/eugengi/gmail-mcp#readme"
 Issues = "https://github.com/eugengi/gmail-mcp/issues"
 Source = "https://github.com/eugengi/gmail-mcp"
 
+# == Hatch ==============================================================================
+
+# For extensive hatch config:
+# See: https://coverage.readthedocs.io/en/latest/config.html
 [tool.hatch.version]
 path = "src/gmail/__about__.py"
 
@@ -41,6 +57,10 @@ extra-dependencies = [
 [tool.hatch.envs.types.scripts]
 check = "mypy --install-types --non-interactive {args:src/gmail tests}"
 
+# == Coverage ===========================================================================
+
+# For extensive coverage config:
+# See: https://coverage.readthedocs.io/en/latest/config.html
 [tool.coverage.run]
 source_pkgs = ["gmail", "tests"]
 branch = true
@@ -54,8 +74,22 @@ gmail = ["src/gmail", "*/gmail-mcp/src/gmail"]
 tests = ["tests", "*/gmail-mcp/tests"]
 
 [tool.coverage.report]
-exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
+ignore_errors = true
+include_namespace_packages = true
+precision = 2
+show_missing = true
+skip_empty = true
+exclude_also = [
+    "pragma: no cover",
+    "no cov",
+    "def __repr__",
+    "def __str__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "assert",
+    "if __name__ == '__main__':",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "class .*Protocol:",
+    "@(abc\\.)?abstractmethod",
 ]
