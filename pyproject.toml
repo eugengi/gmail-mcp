@@ -36,12 +36,21 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
 
 [project.urls]
 Documentation = "https://github.com/eugengi/gmail-mcp#readme"
 Issues = "https://github.com/eugengi/gmail-mcp/issues"
 Source = "https://github.com/eugengi/gmail-mcp"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/gmail"]
+
+dependencies = []
+
+[dependency-groups]
+quality = [
+    "pre-commit>=3.5.0",
+]
 
 # == Hatch ==============================================================================
 
