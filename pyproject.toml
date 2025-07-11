@@ -10,31 +10,29 @@
 # =======================================================================================
 
 [build-system]
-requires = ["hatchling"]
+requires = [ "hatchling" ]
 build-backend = "hatchling.build"
 
 [project]
 name = "gmail-mcp"
-dynamic = ["version"]
+dynamic = [ "version" ]
 description = 'An MCP server to interface with Gmail via the MCP protocol.'
 readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
-keywords = ["gmail", "gmail-api", "google", "mcp", "mcp-server",]
-authors = [
-  { name = "Eugene Mwangi", email = "mwangi.em37@gmail.com" },
-]
+keywords = [ "gmail", "gmail-api", "google", "mcp", "mcp-server" ]
+authors = [ { name = "Eugene Mwangi", email = "mwangi.em37@gmail.com" } ]
 classifiers = [
   "Development Status :: 3 - Alpha",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
+  "Programming Language :: Python",
 ]
 
 [project.urls]
@@ -43,14 +41,12 @@ Issues = "https://github.com/eugengi/gmail-mcp/issues"
 Source = "https://github.com/eugengi/gmail-mcp"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/gmail"]
+packages = [ "src/gmail" ]
 
-dependencies = []
+dependencies = [  ]
 
 [dependency-groups]
-quality = [
-    "pre-commit>=3.5.0",
-]
+quality = [ "pre-commit>=3.5.0" ]
 
 # == Hatch ==============================================================================
 
@@ -60,9 +56,8 @@ quality = [
 path = "src/gmail/__about__.py"
 
 [tool.hatch.envs.types]
-extra-dependencies = [
-  "mypy>=1.0.0",
-]
+extra-dependencies = [ "mypy>=1.0.0" ]
+
 [tool.hatch.envs.types.scripts]
 check = "mypy --install-types --non-interactive {args:src/gmail tests}"
 
@@ -71,34 +66,32 @@ check = "mypy --install-types --non-interactive {args:src/gmail tests}"
 # For extensive coverage config:
 # See: https://coverage.readthedocs.io/en/latest/config.html
 [tool.coverage.run]
-source_pkgs = ["gmail", "tests"]
 branch = true
+omit = [ "src/gmail/__about__.py" ]
 parallel = true
-omit = [
-  "src/gmail/__about__.py",
-]
+source_pkgs = [ "gmail", "tests" ]
 
 [tool.coverage.paths]
-gmail = ["src/gmail", "*/gmail-mcp/src/gmail"]
-tests = ["tests", "*/gmail-mcp/tests"]
+gmail = [ "*/gmail-mcp/src/gmail", "src/gmail" ]
+tests = [ "*/gmail-mcp/tests", "tests" ]
 
 [tool.coverage.report]
+exclude_also = [
+  "@(abc\\.)?abstractmethod",
+  "assert",
+  "class .*Protocol:",
+  "def __repr__",
+  "def __str__",
+  "if TYPE_CHECKING:",
+  "if __name__ == '__main__':",
+  "if __name__ == .__main__.:",
+  "no cov",
+  "pragma: no cover",
+  "raise AssertionError",
+  "raise NotImplementedError",
+]
 ignore_errors = true
 include_namespace_packages = true
 precision = 2
 show_missing = true
 skip_empty = true
-exclude_also = [
-    "pragma: no cover",
-    "no cov",
-    "def __repr__",
-    "def __str__",
-    "raise AssertionError",
-    "raise NotImplementedError",
-    "assert",
-    "if __name__ == '__main__':",
-    "if __name__ == .__main__.:",
-    "if TYPE_CHECKING:",
-    "class .*Protocol:",
-    "@(abc\\.)?abstractmethod",
-]
